@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-
+import { Route, useParams, useHistory } from 'react-router-dom';
+import { render, screen, waitFor } from '@testing-library/react';
+import { axiosWithAuth } from './utils'
 import Article from './Article';
 import EditForm from './EditForm';
+
 
 const View = (props) => {
     const [articles, setArticles] = useState([]);
@@ -10,19 +13,38 @@ const View = (props) => {
     const [editId, setEditId] = useState();
 
     const handleDelete = (id) => {
+        axiosWithAuth
+        .delete(`http://localhost:5000/api/articles/${articles.id}`,articles)
+        .then(response => {
+          props.setArticles(response.data)
+          push('/articles')
+        })
+        .catch(error => {
+             console.log(error)})
     }
+
+    useEffect(() => {
+        articleService(setArticles);
+      }, [])
+    
+    
 
     const handleEdit = (article) => {
+        push(`/setArticles/${id}`) 
     }
 
-    const handleEditSelect = (id)=> {
+    const handleEditSelect = (id) => {
         setEditing(true);
         setEditId(id);
     }
 
-    const handleEditCancel = ()=>{
+    const handleEditCancel = () => {
         setEditing(false);
     }
+
+    
+
+
 
     return(<ComponentContainer>
         <HeaderContainer>View Articles</HeaderContainer>
