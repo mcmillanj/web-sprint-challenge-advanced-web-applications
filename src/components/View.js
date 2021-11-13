@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Route, useParams, useHistory } from 'react-router-dom';
 import { render, screen, waitFor } from '@testing-library/react';
-import { axiosWithAuth } from './utils'
+import { axiosWithAuth} from '../utils';
 import Article from './Article';
 import EditForm from './EditForm';
 
